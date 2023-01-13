@@ -13,7 +13,6 @@ contract LinkedList {
 		address prev; 
 	}
 	
-	//maps a uint to a struct 
 	mapping(address => UserAccount) public users; 
 
 	address public head; 
@@ -46,17 +45,32 @@ contract LinkedList {
 		
 		//newNext = addr3
 		//newPrev = addr1
+		
 		address newNext = users[id].next; 
 		address newPrev = users[id].prev; 
-		
-		//addr1.next = addr3
-		users[newPrev].next = newNext; 
-		//addr3.next = addr1
-		users[newNext].prev = newPrev; 
 
-		//remove id from list
-		users[id].next = address(0); 
-		users[id].prev = address(0); 
+		if (id == head) {
+			require (newPrev == address(0), "not head"); 		
+			
+			//the second address becomes the new head and we make sure it does not have a previous entry
+			head = newNext; 
+			users[newNext].prev = address(0); 
+		} else if (id == tail) {
+			require(newNext == address(0), "not tail"); 	
+			
+			//the second to last address becomes the new tail
+			tail = newPrev; 
+			users[newPrev].next = address(0); 
+		} else {
+			//addr1.next = addr3
+			users[newPrev].next = newNext; 
+			//addr3.next = addr1
+			users[newNext].prev = newPrev; 
+		}
+
+			//remove id from list by unlinking
+			users[id].next = address(0); 
+			users[id].prev = address(0); 
 	}
 
 

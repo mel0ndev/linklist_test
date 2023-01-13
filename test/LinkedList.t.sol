@@ -124,4 +124,76 @@ contract LinkedListTest is Test {
 		console.log("next node:", next4); 
 		console.log("prev node:", prev4); 
 	}
+
+	function testRemoveHead() public {
+		vm.prank(user1); 	
+			linkedList.addNode(17); 
+
+		vm.prank(user2); 
+			linkedList.addNode(23); 
+
+		vm.prank(user3); 
+			linkedList.addNode(75); 
+		
+		head = linkedList.head(); 	
+		tail = linkedList.tail(); 
+		(uint256 data, address next, address prev) = linkedList.getData(user1); 
+		console.log("head:", head); 
+		console.log("user1 link", user1); 
+		console.log("data:", data); 
+		console.log("next node:", next); 
+		console.log("prev node:", prev); 
+
+
+		(,address next1, ) = linkedList.getData(user2); 
+		console.log("user2 next before remove:", next1); 
+		
+		linkedList.removeNode(user1); 
+
+		head = linkedList.head(); 
+		console.log("hew head", head); 
+		(uint256 data2, address next2, address prev2) = linkedList.getData(user2); 
+
+		console.log("user2 link:", user2); 
+		console.log("data:", data2); 
+		console.log("next node:", next2); 
+		console.log("prev node:", prev2); 
+	}
+
+	function testRemoveTail() public {
+		vm.prank(user1); 	
+			linkedList.addNode(17); 
+
+		vm.prank(user2); 
+			linkedList.addNode(23); 
+
+		vm.prank(user3); 
+			linkedList.addNode(75); 
+		
+		head = linkedList.head(); 	
+		tail = linkedList.tail(); 
+		(uint256 data, address next, address prev) = linkedList.getData(user3); 
+		console.log("tail:", tail); 
+		console.log("user1 link", user3); 
+		console.log("data:", data); 
+		console.log("next node:", next); 
+		console.log("prev node:", prev); 
+
+		linkedList.removeNode(user3); 
+		
+		tail = linkedList.tail();
+		console.log("new tail", tail); 
+		(uint256 data2, address next2, address prev2) = linkedList.getData(user2); 
+
+		console.log("user2 link:", user2); 
+		console.log("data:", data2); 
+		console.log("next node:", next2); 
+		console.log("prev node:", prev2); 
+		
+		//make sure it is removed from the list	by unlinking it
+		(uint256 data1, address next1, address prev1) = linkedList.getData(user3); 
+		console.log("data:", data1); 
+		console.log("next node:", next1); 
+		console.log("prev node:", prev1); 
+	}
 }
