@@ -19,7 +19,8 @@ contract FlashLoan is Test {
 	function setUp() public {
 		flashLoan = new Flashloan(addressProvider); 	
 		
-		//vm.deal(USDC, user, 100e18); 
+		
+		//vm.deal(user, 100e18); 
 	}
 
 
